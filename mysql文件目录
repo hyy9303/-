@@ -1,0 +1,54 @@
+D:\mysql-8.0.44-winx64\mysql-8.0.44-winx64>tree
+卷 Data 的文件夹 PATH 列表
+卷序列号为 3EE5-FBE4
+D:.
+├─bin
+├─data
+│  ├─#innodb_redo
+│  ├─#innodb_temp
+│  ├─meddata_hub
+│  ├─mysql
+│  ├─performance_schema
+│  └─sys
+├─docs
+├─include
+│  ├─mysql
+│  └─openssl
+├─lib
+│  ├─mecab
+│  │  ├─dic
+│  │  │  ├─ipadic_euc-jp
+│  │  │  ├─ipadic_sjis
+│  │  │  └─ipadic_utf-8
+│  │  └─etc
+│  ├─plugin
+│  │  └─debug
+│  └─private
+│      └─icudt77l
+│          └─brkitr
+└─share
+    ├─bulgarian
+    ├─charsets
+    ├─czech
+    ├─danish
+    ├─dutch
+    ├─english
+    ├─estonian
+    ├─french
+    ├─german
+    ├─greek
+    ├─hungarian
+    ├─italian
+    ├─japanese
+    ├─korean
+    ├─norwegian
+    ├─norwegian-ny
+    ├─polish
+    ├─portuguese
+    ├─romanian
+    ├─russian
+    ├─serbian
+    ├─slovak
+    ├─spanish
+    ├─swedish
+    └─ukrainian
