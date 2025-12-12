@@ -415,5 +415,5 @@ def delete_multimodal(mid):
 
 
 if __name__ == "__main__":
-    # 让前端同学可以用 http://localhost:5000 访问
     app.run(host="0.0.0.0", port=5000, debug=True)
+
