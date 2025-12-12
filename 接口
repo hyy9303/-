@@ -1,0 +1,497 @@
+ 🩺 医疗多模态管理系统 · 后端接口文档（最终版）
+
+后端服务地址（示例）：
+
+```
+http://10.171.88.3:5000
+```
+
+所有接口前缀统一为：
+
+```
+/api
+```
+
+统一返回格式：
+
+```json
+{
+  "code": 0,
+  "message": "ok",
+  "data": ...
+}
+```
+
+失败示例：
+
+```json
+{
+  "code": 4001,
+  "message": "医生不存在",
+  "data": null
+}
+```
+
+---
+
+# 📌 目录
+
+- [1. 科室（departments）](#1-科室departments)
+- [2. 医生（doctors）](#2-医生doctors)
+- [3. 药品（medicines）](#3-药品medicines)
+- [4. 患者（patients）](#4-患者patients)
+- [5. 病历（medical_records）](#5-病历medical_records)
+- [6. 处方明细（prescription_details）](#6-处方明细prescription_details)
+- [7. 挂号（appointments）](#7-挂号appointments)
+- [8. 多模态数据（multimodal_data）⭐重点](#8-多模态数据multimodal_data⭐重点)
+- [文件访问方式](#文件访问方式)
+
+---
+
+# 1️⃣ 科室（departments）
+
+## 获取科室列表
+
+```
+GET /api/departments
+```
+
+**响应示例：**
+
+```json
+{
+  "code": 0,
+  "message": "ok",
+  "data": [
+    { "id": "dept1", "name": "心内科", "location": "一号楼3层" }
+  ]
+}
+```
+
+---
+
+## 新增科室
+
+```
+POST /api/departments
+Content-Type: application/json
+```
+
+请求体：
+
+```json
+{
+  "id": "dept1",
+  "name": "心内科",
+  "location": "一号楼3层"
+}
+```
+
+---
+
+## 删除科室
+
+```
+DELETE /api/departments/{id}
+```
+
+---
+
+# 2️⃣ 医生（doctors）
+
+## 获取医生列表
+
+```
+GET /api/doctors
+```
+
+可选参数：
+
+| 参数名 | 说明 |
+|-------|------|
+| departmentId | 按科室过滤 |
+
+示例：
+
+```
+GET /api/doctors?departmentId=dept1
+```
+
+响应：
+
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "id": "doc1",
+      "name": "张三",
+      "department_id": "dept1",
+      "title": "主任医师",
+      "specialty": "心血管",
+      "phone": "13800000000"
+    }
+  ]
+}
+```
+
+---
+
+## 新增医生
+
+```
+POST /api/doctors
+```
+
+请求体：
+
+```json
+{
+  "id": "doc1",
+  "name": "张三",
+  "password": "123456",
+  "departmentId": "dept1",
+  "title": "主任医师",
+  "specialty": "心血管",
+  "phone": "13800000000"
+}
+```
+
+---
+
+## 删除医生
+
+```
+DELETE /api/doctors/{id}
+```
+
+
+
+# 3️⃣ 药品（medicines）
+
+## 获取药品列表
+
+```
+GET /api/medicines
+```
+
+---
+
+## 新增药品
+
+```
+POST /api/medicines
+```
+
+请求体：
+
+```json
+{
+  "id": "med1",
+  "name": "阿司匹林",
+  "price": 12.5,
+  "stock": 100,
+  "specification": "100mg*20片"
+}
+```
+
+---
+
+## 删除药品
+
+```
+DELETE /api/medicines/{id}
+```
+
+
+
+# 4️⃣ 患者（patients）
+
+## 获取患者列表（支持模糊查询）
+
+```
+GET /api/patients
+```
+
+可选参数：`name`
+
+示例：
+
+```
+GET /api/patients?name=李
+```
+
+响应：
+
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "id": "p1",
+      "name": "李四",
+      "gender": "男",
+      "age": 45,
+      "phone": "13900000000",
+      "address": "某某小区",
+      "createTime": "2025-01-01"
+    }
+  ]
+}
+```
+
+---
+
+## 新增患者
+
+```
+POST /api/patients
+```
+
+请求体：
+
+```json
+{
+  "id": "p1",
+  "name": "李四",
+  "gender": "男",
+  "age": 45,
+  "phone": "13900000000",
+  "address": "某某小区",
+  "password": "123456"
+}
+```
+
+---
+
+## 删除患者
+
+```
+DELETE /api/patients/{id}
+```
+
+
+
+# 5️⃣ 病历（medical_records）
+
+## 获取病历
+
+```
+GET /api/medical-records
+```
+
+可选参数：
+
+| 参数名 | 说明 |
+|---|---|
+| patientId | 按患者过滤 |
+| doctorId | 按医生过滤 |
+
+响应：
+
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "id": "mr1",
+      "patientId": "p1",
+      "doctorId": "doc1",
+      "diagnosis": "高血压",
+      "treatmentPlan": "低盐饮食",
+      "visitDate": "2025-01-01"
+    }
+  ]
+}
+```
+
+---
+
+## 新增病历
+
+```
+POST /api/medical-records
+```
+
+---
+
+## 删除病历
+
+```
+DELETE /api/medical-records/{id}
+```
+
+
+
+# 6️⃣ 处方明细（prescription_details）
+
+## 获取处方明细
+
+```
+GET /api/prescriptions
+```
+
+可选参数：
+
+- recordId
+
+---
+
+## 新增处方明细
+
+```
+POST /api/prescriptions
+```
+
+---
+
+## 删除处方明细
+
+```
+DELETE /api/prescriptions/{id}
+```
+
+
+
+# 7️⃣ 挂号（appointments）
+
+## 获取挂号列表
+
+```
+GET /api/appointments
+```
+
+可选参数：
+
+- status
+
+---
+
+## 新增挂号
+
+```
+POST /api/appointments
+```
+
+---
+
+## 删除挂号
+
+```
+DELETE /api/appointments/{id}
+```
+
+
+
+# 8️⃣ 多模态数据（multimodal_data）⭐
+
+## 获取多模态数据
+
+```
+GET /api/multimodal
+```
+
+可选参数：
+
+| 参数名 | 说明 |
+|--------|-------|
+| modality | image / audio / pdf / text / video / timeseries |
+| patientId | 按患者过滤 |
+
+示例：
+
+```
+GET /api/multimodal?modality=image
+```
+
+响应示例（与数据库一致）：
+
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "id": "img_ct_1",
+      "patientId": null,
+      "recordId": null,
+      "sourceTable": "MedicalImage",
+      "sourcePk": "CTImage1",
+      "modality": "image",
+      "filePath": "medicaldata/MedicalImage/CTImage1.jpg",
+      "fileFormat": "jpg",
+      "description": "CT 影像示例",
+      "createdAt": "2025-01-01 12:00:00"
+    }
+  ]
+}
+```
+
+---
+
+## 新增多模态记录
+
+```
+POST /api/multimodal
+```
+
+请求体示例：
+
+```json
+{
+  "id": "new_img",
+  "modality": "image",
+  "sourceTable": "MedicalImage",
+  "sourcePk": "CTImage2",
+  "filePath": "medicaldata/MedicalImage/CTImage2.jpg",
+  "fileFormat": "jpg",
+  "patientId": "p1",
+  "recordId": "mr1",
+  "description": "第二张 CT"
+}
+```
+
+---
+
+## 删除多模态记录
+
+```
+DELETE /api/multimodal/{id}
+```
+
+
+
+# 📂 文件访问方式（前端用来播放/展示文件）
+
+你的 static 配置允许前端通过 URL 直接访问文件：
+
+例如：
+
+### 图像
+```
+http://10.171.88.3:5000/medicaldata/MedicalImage/CTImage1.jpg
+```
+
+### 音频
+```
+http://10.171.88.3:5000/medicaldata/AudioRecord/心理咨询录音.mp3
+```
+
+### 视频
+```
+http://10.171.88.3:5000/medicaldata/StandardVideo/手术流程视频.mp4
+```
+
+### CSV
+```
+http://10.171.88.3:5000/patient_blood_pressure/patient_blood_pressure1.csv
+```
+
+### 预测图
+```
+http://10.171.88.3:5000/Predictions/BloodPressure/patient_blood_pressure1.png
+```
+
+前端可直接在 `<img>`, `<audio>`, `<video>`, `<a>` 中使用。
+
+---
+
