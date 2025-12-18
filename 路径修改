@@ -1,0 +1,14 @@
+UPDATE multimodal_data
+SET file_path = CONCAT('uploaded_files/', file_path)
+WHERE file_path LIKE 'medicaldata/%';
+
+
+UPDATE multimodal_data
+SET file_path = CONCAT('uploaded_files/', file_path)
+WHERE file_path LIKE 'patient_blood_pressure/%'
+   OR file_path LIKE 'patient_temperature/%';
+
+
+UPDATE multimodal_data
+SET file_path = CONCAT('uploaded_files/', file_path)
+WHERE file_path LIKE 'Predictions/%';
