@@ -14,7 +14,7 @@
 *   **关联实体**: 处方明细 (Prescription_Details) - *用于解决病历与药品之间的多对多关系*
 *   **扩展实体**: 多模态数据 (Multimodal_Data) - *用于统一管理医学影像、音频、视频、PDF 文档等多模态文件及文本内容*
 ### 1.1 可视化 E-R 图
-
+```mermaid
 erDiagram
     %% =========================
     %% 实体定义
@@ -115,7 +115,7 @@ erDiagram
 
     PATIENTS ||--o{ MULTIMODAL_DATA : "linked (关联多模态数据)"
     MEDICAL_RECORDS ||--o{ MULTIMODAL_DATA : "linked (关联多模态数据)"
-
+```
 
 ### 1.2 实体关系文字说明
 
