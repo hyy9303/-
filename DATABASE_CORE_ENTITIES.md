@@ -6,9 +6,9 @@
 本文件详细说明系统中的核心主数据表结构与设计意图，涵盖：
 
 - `departments` — 科室信息
-- `doctors`     — 医生信息
-- `patients`    — 患者信息
-- `medicines`   — 药品信息
+- `doctors` — 医生信息
+- `patients` — 患者信息
+- `medicines` — 药品信息
 
 这些表为挂号、病历、处方、多模态数据等业务表提供基础维度支撑。
 
