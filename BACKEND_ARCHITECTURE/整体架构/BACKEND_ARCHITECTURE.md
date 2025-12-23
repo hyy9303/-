@@ -1,5 +1,5 @@
 
-# MedData Hub 后端架构文档
+# MedData Hub 后端架构文档 (重构版)
 
 ## 1. 项目概述
 本项目是一个基于 **Python Flask** 框架开发的医疗数据管理系统（MedData Hub）后端服务。
@@ -99,16 +99,20 @@ MedDataHub/backend
     *   计算每位医生当前的待处理挂号数量。
 *   **关系除法/全称量词 (Relational Division)** -> `api/patient.py`:
     *   识别“VIP患者”（去过所有科室的患者），使用双重 `NOT EXISTS` 实现。
+*   **统计聚合与多表关联 (Analytical Aggregation)** -> `api/stats.py`:
+    *   为患者流向等统计场景提供聚合查询和多表关联，生成可直接用于 Sankey 图的数据结构。
 
 ### 5.2 事务处理 (Write Operations)
 *   **病历提交事务** -> `api/record.py`:
     *   通过 `conn.start_transaction()` 保证病历主表与处方明细表的原子性写入，包含库存的强校验。
 *   **挂号自动分配** -> `api/appointment.py`:
     *   结合 `GROUP BY` 和聚合函数，实现基于医生负载的自动排班逻辑。
+*   **多模态文件元数据写入** -> `api/multimodal.py`:
+    *   在文件保存成功后，将文件路径及其业务关联信息写入数据库，保证文件系统与数据库记录的一致性。
 
 ## 6. 部署与运行
 
 *   **入口文件**: `run.py`
 *   **启动命令**: `python run.py`
 *   **配置**: 数据库配置位于 `app/utils/db.py`。
-*   **扩展性**: 新增业务模块只需在 `app/api/` 下新建文件，并在 `app/__init__.py` 中注册即可，无需修改核心逻辑。
+*   **扩展性**: 新增业务模块只需在 `app/api/` 下新建文件，并在 `app/__init__.py` 中注册即可，无需修改核心逻辑。新增的批量数据导入脚本位于 `insert_data_python/` 目录，运行时文件存储位于 `uploaded_files/` 目录，可根据需求调整。
