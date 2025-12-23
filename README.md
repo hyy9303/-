@@ -54,16 +54,16 @@
 
 ### 后端逻辑与模块
 * **核心文档**：
-  * [应用启动流程（App Bootstrap）](./backend/BACKEND_APP_BOOTSTRAP.md)
-  * [后端文档总览（Summary）](./backend/BACKEND_MODULES_SUMMARY.md)
+  * [应用启动流程（App Bootstrap）](./BACKEND_ARCHITECTURE/核心文档/BACKEND_APP_BOOTSTRAP.md)
+  * [后端文档总览（Summary）](./BACKEND_ARCHITECTURE/核心文档/BACKEND_MODULES_SUMMARY.md)
 * **业务模块文档**：
-  * [认证 Auth](./backend/BACKEND_API_AUTH.md) | [患者 Patient](./backend/BACKEND_API_PATIENT.md)
-  * [医生 Doctor](./backend/BACKEND_API_DOCTOR.md) | [挂号 Appointment](./backend/BACKEND_API_APPOINTMENT.md)
-  * [病历 Record](./backend/BACKEND_API_RECORD.md) | [基础数据 Basic](./backend/BACKEND_API_BASIC.md)
-  * [多模态 Multimodal](./backend/BACKEND_API_MULTIMODAL.md) | [统计 Stats](./backend/BACKEND_API_STATS.md)
+  * [认证 Auth](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_AUTH.md) | [患者 Patient](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_PATIENT.md)
+  * [医生 Doctor](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_DOCTOR.md) | [挂号 Appointment](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_APPOINTMENT.md)
+  * [病历 Record](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_RECORD.md) | [基础数据 Basic](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_BASIC.md)
+  * [多模态 Multimodal](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_MULTIMODAL.md) | [统计 Stats](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_STATS.md)
 * **系统辅助文档**：
-  * [工具层 Utils](./backend/BACKEND_UTILS.md) | [数据初始化 Data Init](./backend/BACKEND_DATA_INIT.md)
-  * [文件系统与多模态设计](./backend/BACKEND_DATA_FILES_AND_MULTIMODAL.md)
+  * [工具层 Utils](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_UTILS.md) | [数据初始化 Data Init](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_DATA_INIT.md)
+  * [文件系统与多模态设计](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_DATA_FILES_AND_MULTIMODAL.md)
 
 ---
 
