@@ -1,4 +1,3 @@
-```markdown
 # 数据库设计：核心实体 (DATABASE_CORE_ENTITIES)
 
 **项目名称**: MedData Hub 医疗数据管理系统  
@@ -236,5 +235,5 @@ CREATE TABLE `meddata_hub`.`medicines` (
 - 医疗业务主线：患者 (`patients`) 找医生 (`doctors`) 在科室 (`departments`) 就诊并产生处方中的药品 (`medicines`)；
 - 为其它业务表（`appointments`, `medical_records`, `prescription_details`, `multimodal_data`）提供稳定的维度支撑和引用锚点。
 
-```
+
 
