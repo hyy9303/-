@@ -52,6 +52,19 @@
     *   [核心基础 (Core)](./docs/ui/CORE.md) | [临床业务 (Clinical)](./docs/ui/CLINICAL.md)
     *   [患者服务 (Patient)](./docs/ui/PATIENT.md) | [后台管理 (Admin)](./docs/ui/ADMIN.md)
 
+### 后端逻辑与模块
+* **核心文档**：
+  * [应用启动流程（App Bootstrap）](./backend/BACKEND_APP_BOOTSTRAP.md)
+  * [后端文档总览（Summary）](./backend/BACKEND_MODULES_SUMMARY.md)
+* **业务模块文档**：
+  * [认证 Auth](./backend/BACKEND_API_AUTH.md) | [患者 Patient](./backend/BACKEND_API_PATIENT.md)
+  * [医生 Doctor](./backend/BACKEND_API_DOCTOR.md) | [挂号 Appointment](./backend/BACKEND_API_APPOINTMENT.md)
+  * [病历 Record](./backend/BACKEND_API_RECORD.md) | [基础数据 Basic](./backend/BACKEND_API_BASIC.md)
+  * [多模态 Multimodal](./backend/BACKEND_API_MULTIMODAL.md) | [统计 Stats](./backend/BACKEND_API_STATS.md)
+* **系统辅助文档**：
+  * [工具层 Utils](./backend/BACKEND_UTILS.md) | [数据初始化 Data Init](./backend/BACKEND_DATA_INIT.md)
+  * [文件系统与多模态设计](./backend/BACKEND_DATA_FILES_AND_MULTIMODAL.md)
+
 ---
 
 ## 快速开始 (Getting Started)
