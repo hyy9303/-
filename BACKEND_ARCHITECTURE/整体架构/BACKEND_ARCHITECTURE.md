@@ -1,5 +1,5 @@
 
-# MedData Hub 后端架构文档 (重构版)
+# MedData Hub 后端架构文档
 
 ## 1. 项目概述
 本项目是一个基于 **Python Flask** 框架开发的医疗数据管理系统（MedData Hub）后端服务。
