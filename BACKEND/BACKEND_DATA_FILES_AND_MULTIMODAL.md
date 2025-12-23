@@ -370,11 +370,6 @@ BASE_DIR + '/uploaded_files/' + file_path
 - 避免误删真实医疗文件  
 - 支持同一文件被多个业务引用  
 
-如果你有需要，可以扩展一个：
-
-```
-DELETE /api/multimodal/<id>?delete_file=true
-```
 
 ---
 
@@ -446,3 +441,4 @@ api/timeseries.py
 - 文件生命周期的设计思想  
 - 如何扩展 csv 时序数据和上传接口  
 ---
+
