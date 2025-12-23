@@ -168,7 +168,7 @@ ALTER TABLE `medical_records`
 
 ---
 
-# 3. 业务实体之间的关系（不含关联表）
+# 3. 业务实体之间的关系
 
 ```text
 patients ─────────→ appointments ─────────→ medical_records
@@ -209,7 +209,6 @@ patients ─────────→ appointments ─────────
 - 承载了工作流流转  
 - 驱动着统计分析、多模态数据挂载、处方生成等后续行为  
 
-关联实体（如处方明细）将在另一份独立文档中说明。
 
 
 ---
