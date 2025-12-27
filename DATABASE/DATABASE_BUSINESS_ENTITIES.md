@@ -180,7 +180,6 @@ patients ─────────→ appointments ─────────
 - 患者首先进行挂号（appointments）
 - 医生根据挂号进行诊疗并形成病历（medical_records）
 
-两者都是 **表示独立业务事件的实体**，不存在 M:N 或 R:N 的结构，因此归类为“业务实体”。
 
 ---
 
