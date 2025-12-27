@@ -285,8 +285,8 @@ patient_temperature2.csv
 
 | 接口 | 功能 |
 |------|------|
-| `GET /api/multimodal` | 列出记录（可筛选） |
-| `POST /api/multimodal` | 创建记录（使用已有文件路径） |
+| `GET /api/multimodal` | 列出记录 |
+| `POST /api/multimodal` | 创建记录 |
 | `GET /api/multimodal/file/<id>` | 下载/展示文件 |
 | `DELETE /api/multimodal/<id>` | 删除记录 |
 
