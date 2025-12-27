@@ -1,6 +1,6 @@
 # **BACKEND_DATA_FILES_AND_MULTIMODAL.md**  
 
-本说明文档用于详细描述系统中的 **多模态医疗数据（medical images / audio / video / genomic / documents 等）** 与 **本地文件目录结构**、**数据库结构**、**后端 API 模块**之间的关系，以及未来扩展建议。
+本说明文档用于详细描述系统中的 **多模态医疗数据（medical images / audio / video / genomic / documents 等）** 与 **本地文件目录结构**、**数据库结构**、**后端 API 模块**之间的关系。
 
 该模块与以下组件强相关：
 
@@ -30,13 +30,12 @@
 uploaded_files/
 ```
 
-这是系统的**外部数据源目录**，也是多模态数据接口的基础。
 
 ---
 
 # **2. uploaded_files 目录结构说明**
 
-你提供的完整结构如下（节选说明重点部分）：
+完整结构如下：
 
 ```
 uploaded_files/
@@ -255,19 +254,8 @@ patient_temperature2.csv
 
 ---
 
-### **这些 CSV 数据目前未被 API 直接读取，但它们属于扩展数据源**
 
-未来可新增 API：
 
-```
-GET /api/patient/<id>/blood_pressure
-GET /api/patient/<id>/blood_sugar
-GET /api/patient/<id>/temperature
-```
-
-用于健康监控曲线展示。
-
----
 
 # **5. 数据库结构 MULTIMODAL_DATA**
 
@@ -309,11 +297,6 @@ GET /api/patient/<id>/temperature
 
 - `file/<id>` 会根据 `file_path` 读取硬盘文件流
 
-目录路径使用 **相对路径存储**，例如：
-
-```
-medicaldata/MedicalImage/CTImage1.jpg
-```
 
 ---
 
@@ -332,7 +315,6 @@ insert_data_python/insert_multimodal.py
 - 自动向 `MULTIMODAL_DATA` 插入相应记录
 - 按随机方式关联患者 ID、病历记录
 
-这是**测试环境初始化多模态数据的核心脚本**。
 
 流程：
 
@@ -346,91 +328,19 @@ insert_data_python/insert_multimodal.py
 
 系统设计遵循以下规则：
 
-### ✔ 文件必须实际存在于 uploaded_files/ 目录   
+###  文件必须实际存在于 uploaded_files/ 目录   
 数据库只记录路径，不存文件本体。
 
-### ✔ file_path 必须是相对路径，例如：
+###  file_path 必须是相对路径
 
-```
-medicaldata/Document/DiagnosisResult1.pdf
-```
+###  后端读取文件时会拼接服务器真实路径
 
-而不是绝对路径。
-
-### ✔ 后端读取文件时会拼接服务器真实路径，例如：
-
-```
-BASE_DIR + '/uploaded_files/' + file_path
-```
-
-### ✔ 删除 MULTIMODAL_DATA 记录 **不会自动删除物理文件**
-
-原因：
-
-- 避免误删真实医疗文件  
-- 支持同一文件被多个业务引用  
+###  删除 MULTIMODAL_DATA 记录 **不会自动删除物理文件**
 
 
----
 
-# **9. 扩展建议**
 
-为使系统更加稳定、可维护，建议未来可扩展：
-
----
-
-### **9.1 增加文件上传 API（目前是手动放文件）**
-
-可新增：
-
-```
-POST /api/multimodal/upload
-```
-
-功能：
-
-- 上传文件 → 保存到对应目录  
-- 自动识别模态 → 创建记录  
-
----
-
-### **9.2 对文件做权限控制（不同医生/患者不同权限）**
-
-可以通过以下字段控制访问：
-
-- patient_id
-- record_id
-- doctor_id（可通过 record 查询）
-
----
-
-### **9.3 建立文件缓存 / 缩略图系统**
-
-例如：
-
-- 对大图（如 CT/MRI）生成缩略图（减少流量）
-- 对视频生成封面帧
-
----
-
-### **9.4 CSV 时序数据可加入独立 API 模块**
-
-例如：
-
-```
-api/timeseries.py
-```
-
-用于：
-
-- 血压趋势图
-- 血糖趋势图
-- 体温趋势图
-- AI 健康预警模型输入数据
-
----
-
-# **10. 文档总结**
+# **9. 文档总结**
 
 本文件解释了系统中：
 
@@ -438,7 +348,6 @@ api/timeseries.py
 - 多模态数据与数据库 MULTIMODAL_DATA 的关系  
 - 多模态 API 如何读写文件  
 - insert_multimodal.py 如何批量生成数据  
-- 文件生命周期的设计思想  
-- 如何扩展 csv 时序数据和上传接口  
+- 文件生命周期的设计思想   
 ---
 
