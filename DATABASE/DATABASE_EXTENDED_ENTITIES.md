@@ -103,7 +103,6 @@ ADD CONSTRAINT `fk_multimodal_record`
 - 外键：`fk_multimodal_patient`
 - 约束策略：`ON DELETE SET NULL`
   - 当某个患者记录被删除时，多模态记录仍保留，只是 `patient_id` 置空；
-  - 有利于在脱敏/匿名场景中保留样本数据。
 
 ### （2）与 `medical_records`（病历）
 
@@ -111,7 +110,6 @@ ADD CONSTRAINT `fk_multimodal_record`
 - 外键：`fk_multimodal_record`
 - 约束策略：`ON DELETE SET NULL`
   - 删除病历时不强制删除多模态记录；
-  - 适用于希望保留文件样本用于模型训练或演示的场景。
 
 
 ---
