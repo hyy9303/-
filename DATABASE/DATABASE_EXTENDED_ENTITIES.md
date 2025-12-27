@@ -228,7 +228,7 @@ uploaded_files/
 2. **查看某患者的全部多模态历史**
 
    - 根据 `patient_id` 查询 `multimodal_data`，按 `created_at` 逆序排序；
-   - 可用于：
+   - 用于：
      - 总览某患者所有影像、报告、监测数据；
      - 为多模态 AI 模型准备输入样本。
 
@@ -236,7 +236,7 @@ uploaded_files/
 
    - 用于统计不同模态数据的数量/占比：
      - 例如：image/audio/video/pdf/timeseries 各占比多少；
-   - 可为仪表盘、Sankey 图、流向分析提供数据源。
+   - 为仪表盘、Sankey 图、流向分析提供数据源。
 
 ---
 
