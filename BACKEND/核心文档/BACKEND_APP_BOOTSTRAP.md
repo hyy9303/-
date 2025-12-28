@@ -43,11 +43,6 @@ if __name__ == "__main__":
 | 启动开发服务器 | Flask 内置服务器（仅 dev 用） |
 | 监听端口 | 默认 `0.0.0.0:5000` |
 
-在生产环境中应使用 gunicorn 或 uwsgi，例如：
-
-```
-gunicorn -w 4 -b 0.0.0.0:5000 "app:create_app()"
-```
 
 ---
 
