@@ -88,9 +88,11 @@ ALTER TABLE `appointments`
   - cancelled（已取消）
 
 **系统使用点：**
-- `/api/appointment/create`：创建挂号
-- `/api/appointment/list`：按患者/医生查询
-- 统计：用于 Sankey 流向（患者 → 科室 → 医生）
+- `POST /api/appointments`：创建挂号记录（患者提交挂号）
+- `GET /api/appointments`：按患者 ID、医生 ID、科室、日期等条件查询挂号列表
+- `GET /api/appointments/statistics`：按年 / 月 / 日维度统计挂号数量
+- `GET /api/stats/sankey`：基于挂号记录和就诊记录，生成「患者 → 科室 → 医生」的桑基流向数据
+
 
 ---
 
