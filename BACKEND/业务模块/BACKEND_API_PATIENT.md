@@ -29,7 +29,7 @@
 
 ### 2.1 PATIENTS 表（核心）
 
-摘自 `DATABASE_DESIGN.md` 的设计（结合源码使用情况）：
+摘自 `DATABASE_DESIGN.md` 的设计：
 
 ```text
 PATIENTS {
