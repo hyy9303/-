@@ -91,7 +91,7 @@
    - 记录 warning 日志；
    - 返回 `{"success": False, "message": "科室不存在"}`，HTTP 404。
 6. 若找到：
-   - 组装返回数据（源码中关键字段）：
+   - 组装返回数据：
      - `id`
      - `name`
      - `location`
