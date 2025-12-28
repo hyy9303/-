@@ -69,7 +69,7 @@ erDiagram
 | `description` | TEXT       |          | 对该多模态数据的描述，如“入院记录 PDF 示例”“手术流程视频示例” |
 | `created_at`  | DATETIME   | 默认当前时间 | 记录创建时间 |
 
-### 2.2 模态与文件示例（来自 `insert_multimodal.py` & 目录结构）
+### 2.2 模态与文件示例
 
 - **文档类 Document / DeviceData**
   - PDF：`uploaded_files/medicaldata/Document/AdmissionRecord1.pdf`
