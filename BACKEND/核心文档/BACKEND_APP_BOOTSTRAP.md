@@ -24,7 +24,7 @@
 backend/run.py
 ```
 
-核心内容如下（已基于最新文件内容确认）：
+核心内容如下：
 
 ```python
 from app import create_app
