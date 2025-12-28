@@ -74,7 +74,6 @@
 - `links[j].source` / `links[j].target`：节点索引（指向 `nodes` 数组下标）
 - `links[j].value`：对应流量（人数/次数）
 
-前端可以直接用 ECharts、D3 等库渲染。
 
 ### 2.3 月度统计数据（Monthly Statistics）
 
