@@ -121,7 +121,6 @@ uploaded_files/
   return send_file(abs_path, as_attachment=False)
   ```
 
-（中间完整实现代码在仓库中被 `...` 省略，这里按典型 Flask 实现进行说明。）
 
 ---
 
