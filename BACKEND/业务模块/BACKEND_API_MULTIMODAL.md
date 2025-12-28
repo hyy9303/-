@@ -17,7 +17,7 @@
   2. 维护数据库中 `MULTIMODAL_DATA` 表的记录；
   3. 与物理文件目录 `uploaded_files/` 建立关联，支持按 ID 返回对应文件内容。
 
-- **上传根目录配置**（代码中已写死）：
+- **上传根目录配置**：
 
   ```python
   UPLOAD_ROOT = os.path.join(os.getcwd(), "uploaded_files")
