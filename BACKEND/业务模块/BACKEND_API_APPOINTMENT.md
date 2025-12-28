@@ -28,7 +28,7 @@
 
 ### 2.1 APPOINTMENTS 表（挂号表）
 
-结合源码使用情况，典型结构如下（字段名以实际 SQL 为准）：
+结构如下：
 
 ```text
 APPOINTMENTS {
@@ -217,7 +217,6 @@ def get_appointment_statistics():
     - `YYYY-MM`：按“月”统计，该月第一天到下月第一天；
     - `YYYY`：按“年”统计，该年 1 月 1 日到下一年 1 月 1 日；
 - `role`（可选，string）
-  - 当前代码中接收但未参与进一步逻辑判断（预留扩展）。
 
 ### 5.3 时间范围与 SQL 构建
 
