@@ -59,7 +59,7 @@ if __name__ == "__main__":
 
 ## **3.1 create_app() — 系统初始化流程**
 
-源码结构如下（保持与你最新文件一致）：
+源码结构如下：
 
 ```python
 def create_app():
