@@ -336,7 +336,6 @@ def update_patient(p_id):
    return jsonify({"success": True, "message": "患者信息更新成功，挂号信息已更新"})
    ```
 
-> 代码中提示“挂号信息已更新”，实际上此函数只更新 `patients` 表，挂号信息的更新如果有需要，应在挂号模块中额外处理。
 
 ### 6.4 错误处理
 
