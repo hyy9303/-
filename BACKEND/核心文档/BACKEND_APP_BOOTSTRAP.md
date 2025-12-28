@@ -157,7 +157,7 @@ backend/app/__init__.py
 - 防止重复添加 handler（Flask reload 时避免重复输出）
 - 创建 StreamHandler 输出日志到控制台
 
-代码结构如下（保持原样）：
+代码结构如下：
 
 ```python
 def setup_logging():
