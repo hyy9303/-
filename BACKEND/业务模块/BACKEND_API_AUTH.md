@@ -181,11 +181,6 @@ logger.error("Login error: %s", e)
        }
        ```
 
-   - 当 `role == 'admin'`：
-     - 当前源码中使用 `role` 字段，但具体管理员存储策略在 `auth.py` 中被 `...` 省略；
-     - 常见实现策略包括：
-       - 独立的 `ADMINS` 表；
-       - 或在 `DOCTORS` 表中通过某个标志字段（如 `is_admin`）区分。
 
 
 4. **执行查询并校验密码**
