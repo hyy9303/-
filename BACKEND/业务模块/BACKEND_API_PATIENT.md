@@ -354,7 +354,6 @@ def delete_patient(patient_id):
     ...
 ```
 
-> `API_DOCUMENTATION.md` 中参数名为 `<p_id>`，实际代码为 `<patient_id>`，路径一致，仅变量名不同。
 
 ### 7.2 业务目标
 
@@ -471,7 +470,7 @@ GROUP BY gender;
 
 ### 9.3 映射逻辑
 
-代码中将数据库中存储的中文性别值映射到英文 key：
+将数据库中存储的中文性别值映射到英文 key：
 
 ```python
 gender_ratio = {"male": 0, "female": 0, "other": 0}
