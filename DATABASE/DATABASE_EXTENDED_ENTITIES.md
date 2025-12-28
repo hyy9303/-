@@ -39,7 +39,6 @@
 
 ## 1.2 表结构（DDL）
 
-> 以下结构基于当前 SQL 文件与插入脚本（如 `insert_multimodal.py`）的设计。
 
 ```sql
 CREATE TABLE `meddata_hub`.`multimodal_data` (
