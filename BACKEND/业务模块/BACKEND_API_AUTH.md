@@ -13,7 +13,7 @@
 
 - 患者 → 表：`PATIENTS`
 - 医生 → 表：`DOCTORS`
-- 管理员 → 当前实现中通常与医生/专门管理员表关联（视后续实现扩展）
+- 管理员 → 当前实现中通常与医生/专门管理员表关联
 
 ---
 
@@ -60,8 +60,6 @@ def login():
 | `password`| string | 是       | 登录密码，对应表中的 `password` 字段     |
 | `role`    | string | 是       | 角色：`patient` / `doctor` / `admin`      |
 
-> 当前实现中，`password` 存储在数据库中为明文字段（`PATIENTS.password`, `DOCTORS.password`）。后续可升级为哈希存储。
-
 ---
 
 ### 3.2 响应格式
@@ -83,7 +81,6 @@ def login():
 - `data` 中的字段来自对应用户表（`PATIENTS` / `DOCTORS` 等），典型包括：
   - 患者：`id`, `name`, `gender`, `age`, `phone`, `address`, `create_time` 等；
   - 医生：`id`, `name`, `title`, `specialty`, `phone`, `department_id` 等；
-- 当前实现中没有生成 JWT 或 session，只返回用户基础信息，供前端后续携带使用。
 
 #### 3.2.2 登录失败：账号或密码错误
 
@@ -130,7 +127,7 @@ logger.error("Login error: %s", e)
 
 ## 4. 认证流程设计
 
-以下是 `login()` 函数的业务逻辑流程（结合源码与数据库设计文档归纳）：
+以下是 `login()` 函数的业务逻辑流程：
 
 1. **解析请求体**
 
@@ -141,8 +138,6 @@ logger.error("Login error: %s", e)
    role = data.get('role')  # 'patient', 'doctor', 'admin'
    ```
 
-   - 若某些字段缺失，当前实现中可能会触发异常并走到统一异常处理（500）。  
-   - 可以在后续增强输入校验（返回 400 + 详细字段错误提示）。
 
 2. **获取数据库连接**
 
@@ -192,7 +187,6 @@ logger.error("Login error: %s", e)
        - 独立的 `ADMINS` 表；
        - 或在 `DOCTORS` 表中通过某个标志字段（如 `is_admin`）区分。
 
-   > 由于源码中 SQL 细节用 `...` 省略，文档在此采用“逻辑层面”的描述，具体实现请以实际 SQL 为准。
 
 4. **执行查询并校验密码**
 
@@ -239,52 +233,8 @@ logger.error("Login error: %s", e)
 
 ---
 
-## 5. 安全性与后续改进建议
 
-当前认证模块实现简洁直接，更接近“教学 & Demo 用途”，在真实生产环境可进一步增强：
-
-1. **密码安全**
-
-   - **当前**：密码以明文形式存储在 `PATIENTS.password` / `DOCTORS.password` 并做明文比对；
-   - **建议**：
-     - 数据库存储密码哈希（如 `bcrypt` / `PBKDF2` / `argon2`）；
-     - 登录时使用相同算法对输入密码做哈希比对；
-     - 明确禁止在任何 API 响应中返回 `password` 字段。
-
-2. **认证令牌（Token / Session）**
-
-   - **当前**：登录成功仅返回基本用户信息，没有 token；
-   - **建议**：
-     - 引入 **JWT**（JSON Web Token）或其他 token 机制；
-     - 登录成功时签发 token：
-       - token 中包含 `sub`（用户ID）、`role`、过期时间 `exp` 等；
-     - 其他业务 API 使用 `Authorization: Bearer <token>` 进行鉴权；
-     - 配合 `before_request` 中的校验实现统一认证授权。
-
-3. **输入校验**
-
-   - 对 `id` / `password` / `role` 做严格的非空校验与类型校验；
-   - 对 `role` 限制在允许的枚举范围内；
-   - 若参数不合法，应返回 `400 Bad Request`，避免直接抛异常。
-
-4. **防暴力破解与风控**
-
-   - 对同一账号 / IP 一定时间内的登录失败次数做限制；
-   - 达到阈值后可以：
-     - 暂时锁定账号；
-     - 或增加图形验证码 / 短信验证码等多因素验证。
-
-5. **审计日志**
-
-   - 对登录成功 / 失败事件打详细审计日志，包括：
-     - 用户 ID、角色；
-     - 来源 IP、User-Agent；
-     - 登录结果；
-   - 日志中严禁记录明文密码。
-
----
-
-## 6. 与其他模块的关系
+## 5. 与其他模块的关系
 
 - **上游调用方**
   - 前端登录页面/应用；
@@ -292,7 +242,7 @@ logger.error("Login error: %s", e)
 
 - **下游依赖**
   - `app.utils.db.get_db_connection()`：数据库连接池；
-  - 数据库表：`PATIENTS`、`DOCTORS`（以及可能的管理员相关表）；
+  - 数据库表：`PATIENTS`、`DOCTORS`；
   - 日志系统：`logging.getLogger(__name__)` 统一日志输出。
 
 - **配合模块**
@@ -300,12 +250,10 @@ logger.error("Login error: %s", e)
 
 ---
 
-## 7. 小结
+## 6. 小结
 
 `auth.py` 模块为完整后端提供了统一的登录入口：
 
 - 采用 **单一接口 `/api/login` + 多角色** 的设计；
 - 通过数据库表 `PATIENTS` / `DOCTORS` 等完成账号密码校验；
 - 在异常情况下保证数据库资源回收与日志记录。
-
-后续若在项目中引入 token 鉴权、密码哈希、审计日志等能力，优先推荐在该模块中进行扩展和改造。
