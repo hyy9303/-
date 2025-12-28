@@ -234,7 +234,7 @@ def create_patient():
 
    - 若 ID 已存在：
      - 记录警告日志；
-     - 返回：`{"success": False, "message": "患者ID已存在"}`（具体报文在代码中用中文提示）。
+     - 返回：`{"success": False, "message": "患者ID已存在"}`。
 
 3. **插入新患者**
 
