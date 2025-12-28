@@ -224,7 +224,7 @@ def update_doctor_detail(doctor_id):
    logger.info("Request to update doctor %s: %s", doctor_id, data)
    ```
 
-2. **校验科室存在性（若传了 departmentId）**
+2. **校验科室存在性**
 
    ```python
    dept_id = data.get('departmentId')
