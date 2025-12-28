@@ -1,6 +1,6 @@
 # BACKEND_API_RECORD.md
 
-> 说明：本文件基于仓库中的 **API_DOCUMENTATION.md** 与 **meddata_hub.sql**，对病历与处方模块的设计做“接口级”说明，可作为后端实现与前端联调的设计文档。
+> 说明：本文件基于仓库中的 **API_DOCUMENTATION.md** 与 **meddata_hub.sql**，对病历与处方模块的设计做“接口级”说明。
 
 ---
 
