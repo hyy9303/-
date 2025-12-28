@@ -135,9 +135,7 @@ uploaded_files/
 | `multimodal.py`  | `/api/multimodal/<string:data_id>`  | `DELETE`  | 删除多模态数据             |
 | `multimodal.py`  | `/api/multimodal/file/<string:data_id>` | `GET` | 按 ID 获取具体文件内容     |
 
-下面逐一说明设计细节。
 
----
 
 ## 5. 接口设计详解
 
