@@ -107,12 +107,12 @@ def get_records():
     ...
 ```
 
-### 4.2 典型请求参数（Query）
+### 4.2 请求参数（Query）
 
-一般可支持如下查询参数（具体以实现为准）：
+可支持如下查询参数：
 
-- `patientId`（可选）：按患者 ID 过滤病历；
-- `doctorId`（可选）：按医生 ID 过滤；
+- `patientId`：按患者 ID 过滤病历；
+- `doctorId`：按医生 ID 过滤；
 - `startDate` / `endDate`（可选）：按就诊时间范围过滤；
 - `limit` / `offset`（可选）：分页。
 
