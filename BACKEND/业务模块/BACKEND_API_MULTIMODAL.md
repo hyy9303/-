@@ -141,8 +141,6 @@ uploaded_files/
 
 ## 5. 接口设计详解
 
-> 由于 `multimodal.py` 源码中间部分被 `...` 省略，以下是**基于现有结构和数据库设计推导的接口设计**，与现有实现高度兼容，也可视为后续完善/重构时的目标规范。
-
 ---
 
 ### 5.1 获取多模态数据列表
@@ -150,20 +148,7 @@ uploaded_files/
 - **URL**：`GET /api/multimodal`
 - **功能**：分页 & 条件查询多模态数据记录，用于前端展示和筛选。
 
-#### 5.1.1 查询参数（建议）
-
-| 参数名       | 类型   | 是否必填 | 说明 |
-|-------------|--------|----------|------|
-| `page`      | int    | 否       | 页码，默认 1 |
-| `pageSize`  | int    | 否       | 每页大小，默认 20 |
-| `patientId` | string | 否       | 按患者 ID 过滤 |
-| `recordId`  | string | 否       | 按病历 ID 过滤 |
-| `modality`  | string | 否       | 按模态类型过滤，例如 `image`, `audio`, `video`, `pdf`, `text` |
-| `source`    | string | 否       | 按 `source_table` 过滤，例如 `MedicalImage`, `GenomicData` |
-
-> 实际实现中没有在文档里完全暴露具体参数名称，若已有前端，请以前端实际调用为准。
-
-#### 5.1.2 响应示例
+#### 5.1.1 响应示例
 
 ```json
 {
@@ -190,7 +175,7 @@ uploaded_files/
 }
 ```
 
-#### 5.1.3 错误响应
+#### 5.1.2 错误响应
 
 - 数据库异常 / 其他异常：
 
@@ -209,20 +194,12 @@ uploaded_files/
 - **功能**：创建一条新的多模态数据记录，并将上传文件保存到 `uploaded_files` 目录下。
 
 #### 5.2.1 请求方式
-
-通常有两种设计方式：
-
-1. **表单 + 文件上传（推荐）**
+**表单 + 文件上传**
    - `Content-Type: multipart/form-data`
    - 字段包括：`file`（二进制）、`patientId`、`recordId`、`modality` 等
    - 使用 `secure_filename(file.filename)` 生成安全文件名，写入磁盘。
 
-2. **纯 JSON + 仅创建 DB 记录**
-   - 适合已经存在物理文件，只想“登记”到系统中；或文件由其他服务写入。
-
-> 当前代码中已经导入了 `secure_filename`，说明实现中存在 **文件上传** 的逻辑。
-
-#### 5.2.2 建议的请求字段
+#### 5.2.2 请求字段
 
 - **在 multipart/form-data 中**：
 
@@ -235,7 +212,7 @@ uploaded_files/
 | `sourcePk`  | string | 否       | 来源记录标识 |
 | `modality`  | string | 是       | 模态类型，如 `image`, `audio`, `video`, `pdf`, `text` |
 | `description` | string | 否     | 描述信息 |
-| `textContent` | string | 否     | 文本内容（若有） |
+| `textContent` | string | 否     | 文本内容 |
 
 #### 5.2.3 成功响应示例
 
@@ -305,7 +282,7 @@ uploaded_files/
 - **URL**：`GET /api/multimodal/file/<string:data_id>`
 - **功能**：按 `MULTIMODAL_DATA.id` 从数据库查到 `file_path`，再从磁盘读取文件，通过 `send_file` 返回给客户端。
 
-#### 5.4.1 处理流程（源代码结尾处已体现）
+#### 5.4.1 处理流程
 
 伪代码示意：
 
@@ -348,7 +325,6 @@ def get_multimodal_file(data_id):
         logger.info("Database connection closed for multimodal file fetch.")
 ```
 
-> 上面的伪代码根据文件结尾的真实结构 + 常规实践补全，逻辑与现有设计一致。
 
 #### 5.4.2 返回内容类型
 
@@ -399,28 +375,5 @@ def get_multimodal_file(data_id):
 - **与患者 / 病历模块**：
   - 通过 `patient_id`、`record_id` 字段与 `PATIENTS` / `MEDICAL_RECORDS` 关联；
   - 前端通过患者或病历详情页面调用 `/api/multimodal` 和 `/api/multimodal/file/<id>` 展示对应图像/音视频/文档。
-
----
-
-## 8. 后续扩展建议
-
-1. **权限与鉴权**
-   - 当前接口未对多模态数据访问做角色权限控制；
-   - 建议结合登录模块（`auth.py`）和角色（医生/患者/管理员）进行权限限制。
-
-2. **软删除**
-   - 为 `MULTIMODAL_DATA` 添加 `is_deleted` 字段；
-   - `DELETE` 接口仅做逻辑删除，物理文件保留一段时间或通过后端作清理任务。
-
-3. **分片上传 / 大文件处理**
-   - 对大型视频、长时音频可采用分片上传方案，完成后合并；
-   - 避免单次请求超时或占用过多内存。
-
-4. **缩略图 / 预览图**
-   - 对 `image` / `video` 类型增加预览图生成逻辑和字段，如 `thumbnail_path`；
-   - 便于前端快速加载列表。
-
-5. **与时序数据联动**
-   - 对 `patient_blood_pressure/`、`patient_blood_sugar/`、`patient_temperature/` 中的 CSV，可在多模态模块中增加 `timeseries` 模态，提供统一查询入口。
 
 ---
