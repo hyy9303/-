@@ -143,7 +143,7 @@
      HTTP 400。
 
 5. 若 `doctor_count == 0`：
-   - 执行删除操作（源码中省略号未展示，但语义上为）：
+   - 执行删除操作：
      ```sql
      DELETE FROM departments WHERE id = %s;
      ```
