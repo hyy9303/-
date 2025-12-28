@@ -238,7 +238,7 @@ def create_patient():
 
 3. **插入新患者**
 
-   核心 INSERT（字段顺序参考源码）：
+   核心 INSERT：
 
    ```python
    insert_sql = """
