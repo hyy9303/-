@@ -181,8 +181,8 @@ def get_prescription_details():
 
 ### 5.2 典型请求参数
 
-- `recordId`（可选）：按病历 ID 过滤处方明细；
-- `patientId`（可选）：可通过 join medical_records 实现“按患者查处方”。
+- `recordId`：按病历 ID 过滤处方明细；
+- `patientId`：可通过 join medical_records 实现“按患者查处方”。
 
 示例：
 
@@ -244,7 +244,7 @@ def create_record():
     ...
 ```
 
-### 6.2 请求体（推荐结构）
+### 6.2 请求体
 
 ```json
 {
@@ -277,7 +277,7 @@ def create_record():
 
 ### 6.3 事务 & 业务规则
 
-**核心要求（来源于 API 文档）**：
+**核心要求**：
 
 - “包含主表和子表插入，事务处理，库存校验”。
 
@@ -328,7 +328,6 @@ def create_record():
       WHERE id = %s;
       ```
 
-      > `stock` 扣减数量一般可按 `days`、`dosage` 或预定义的“每天多少片/支”推算，具体规则视你的业务约定而定。
 
 4. **提交事务**
 
@@ -392,7 +391,6 @@ def delete_record(record_id):
 
 5. 异常时回滚并返回 500；最后关闭连接。
 
-> 注意：由于 `prescription_details` 的外键设置为 `ON DELETE CASCADE`，无需手工 DELETE 明细表。
 
 ---
 
