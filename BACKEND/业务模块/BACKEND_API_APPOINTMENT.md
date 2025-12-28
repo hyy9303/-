@@ -1,6 +1,5 @@
 # BACKEND_API_APPOINTMENT.md
 
-> 适用代码版本：`app/api/appointment.py`（来自当前 backend.zip）
 
 ---
 
