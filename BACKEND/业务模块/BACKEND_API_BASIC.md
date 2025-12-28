@@ -153,7 +153,7 @@
    - 否则：
      - `conn.commit()`
      - 记录 info 日志：删除成功
-     - 返回 `{"success": True, "message": "科室删除成功"}`（具体文案以代码实际为准）
+     - 返回 `{"success": True, "message": "科室删除成功"}`
 
 #### 异常与资源回收
 
