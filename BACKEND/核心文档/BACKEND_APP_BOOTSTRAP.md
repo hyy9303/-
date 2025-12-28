@@ -178,11 +178,6 @@ def setup_logging():
 |------|------|
 | 简洁、安全（避免重复 handler） | 无文件日志、无区分 API 访问日志、无结构化日志 |
 
-如需生产环境，可扩展：
-
-- 文件日志
-- RotatingFileHandler
-- JSON 格式日志
 
 ---
 
