@@ -1,150 +1,195 @@
+# Garbage Classification with MobileNetV2
 
-# MedData Hub
+## 项目简介
 
-> **基于 React 19 + Python Flask 构建的全栈智能医院管理系统。**
+本项目实现了一个基于 **MobileNetV2** 的多类别垃圾图像分类系统，采用**迁移学习**方法，在 **仅使用 CPU 的环境**下完成模型训练、测试、评估及预测结果可视化。
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19.0-blue?logo=react" />
-  <img src="https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript" />
-  <img src="https://img.shields.io/badge/Python-3.x-3776AB?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Flask-2.x-000000?logo=flask&logoColor=white" />
-  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-green" />
-</p>
-
-**MedData Hub** 是一个模拟现代化数字医院全流程的综合管理平台。项目采用前后端分离架构，集成了挂号分诊、电子病历、药房库存管理以及基于大模型的 AI 辅助诊断功能。
-
-本项目采用 **"Hybrid Data Layer"（混合数据层）** 设计：前端支持连接真实的 Python 后端 API，亦可在无后端环境下通过本地 Mock 引擎全功能运行，实现演示环境 100% 可用。
+项目重点展示了在**有限计算资源条件下**，如何构建、训练并评估一个实用的图像分类模型。
 
 ---
 
-## 核心特性 (Key Features)
+## 1. 项目结构说明
 
-### 前端交互 (Frontend)
-*   **混合架构**: “API 优先，Mock 兜底”策略，确保演示稳定性。
-*   **严格权限控制 (RBAC)**: 患者/医生/管理员三级权限体系，视图与操作完全隔离。
-*   **AI 智能集成**:
-    *   **影像诊断**: 集成多模态模型，支持 X 光/CT 片 AI 分析。
-    *   **RAG 问答**: 基于医院数据的上下文增强对话助手。
-*   **数据可视化**: 动态桑基图 (Sankey Diagram) 展示患者流转，运营数据大屏。
-
-### 后端架构 (Backend)
-*   **模块化单体 (Modular Monolith)**: 基于 Flask Blueprint 实现业务领域（Auth, Patient, Doctor 等）的物理隔离。
-*   **复杂业务逻辑**:
-    *   **事务脚本模式**: 确保病历写入与库存扣减的原子性。
-    *   **高级 SQL 查询**: 实现相关子查询统计、双重 `NOT EXISTS` 筛选 VIP 患者等复杂逻辑。
-*   **RESTful API**: 清晰的接口定义，屏蔽底层复杂的数据库表结构。
-
----
-
-## 项目文档 (Documentation)
-
-本项目包含详尽的全栈架构与逻辑说明文档。
-
-### 系统架构
-*   **[前端架构设计](./docs/FRONTEND_ARCHITECTURE.md)**: 技术选型、混合数据层模式及核心依赖。
-*   **[后端架构设计](./backend/BACKEND_ARCHITECTURE.md)**: 蓝图设计、应用工厂模式及核心设计模式说明。
-*   **[API 接口文档](./backend/API_DOCUMENTATION.md)**: 包含认证、挂号、病历、统计等全量接口说明。
-
-### 逻辑与组件
-*   **[前端核心逻辑](./docs/SERVICES_LOGIC.md)**: Mock 引擎、Auth 流程及 AI 适配器。
-*   **UI 组件手册**:
-    *   [核心基础 (Core)](./docs/ui/CORE.md) | [临床业务 (Clinical)](./docs/ui/CLINICAL.md)
-    *   [患者服务 (Patient)](./docs/ui/PATIENT.md) | [后台管理 (Admin)](./docs/ui/ADMIN.md)
-
-### 后端逻辑与模块
-* **核心文档**：
-  * [应用启动流程（App Bootstrap）](./BACKEND_ARCHITECTURE/核心文档/BACKEND_APP_BOOTSTRAP.md)
-  * [后端文档总览（Summary）](./BACKEND_ARCHITECTURE/核心文档/BACKEND_MODULES_SUMMARY.md)
-* **业务模块文档**：
-  * [认证 Auth](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_AUTH.md) | [患者 Patient](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_PATIENT.md)
-  * [医生 Doctor](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_DOCTOR.md) | [挂号 Appointment](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_APPOINTMENT.md)
-  * [病历 Record](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_RECORD.md) | [基础数据 Basic](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_BASIC.md)
-  * [多模态 Multimodal](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_MULTIMODAL.md) | [统计 Stats](./BACKEND_ARCHITECTURE/业务模块/BACKEND_API_STATS.md)
-* **系统辅助文档**：
-  * [工具层 Utils](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_UTILS.md) | [数据初始化 Data Init](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_DATA_INIT.md)
-  * [文件系统与多模态设计](./BACKEND_ARCHITECTURE/系统辅助/BACKEND_DATA_FILES_AND_MULTIMODAL.md)
-
----
-
-## 快速开始 (Getting Started)
-
-### 1. 环境准备
-*   Node.js (v18+) & Yarn
-*   Python (3.8+)
-*   MySQL (8.0+)
-
-### 2. 克隆项目
-```bash
-git clone https://github.com/heavey0027/meddata-hub.git
-cd meddata-hub
+```text
+Basic_AI/
+├─ processed_data/          # 划分后的数据集
+│  ├─ train/
+│  ├─ val/
+│  └─ test/
+│
+├─ outputs/                 # 训练与评估输出
+│  ├─ best_model.keras      # 验证集准确率最优模型
+│  ├─ final_model.keras     # 最终模型
+│  ├─ class_names.json      # 类别名称列表
+│  ├─ history.json          # 训练过程指标
+│  ├─ confusion_matrix.png  # 混淆矩阵图
+│  ├─ accuracy_curve.png    # 准确率曲线
+│  ├─ loss_curve.png        # 损失曲线
+│
+├─ 01_split_dataset.py      # 数据集划分脚本
+├─ 02_train_cpu_light.py    # 训练脚本
+├─ 03_evaluate_cpu_light.py # 测试集评估脚本
+├─ 04_plot_results.py       # 结果可视化脚本
+├─ 05_predict.py            # 单张 / 批量预测脚本
+├─ 05_predict_sample.py     # 抽样预测 + 统计可视化脚本
+│
+├─ requirements.txt
+└─ README.md
 ```
 
-### 3. 后端启动 (Backend)
-确保 MySQL 服务已启动并创建好对应数据库。
 
+---
+
+## 2. 环境依赖
+
+推荐使用 Python 3.8 或以上版本。
+
+### 安装依赖
 ```bash
-# 进入后端目录
-cd backend
-
-# 安装依赖
 pip install -r requirements.txt
-
-# 配置数据库连接 (编辑 app/utils/db.py 或环境变量)
-# ...
-
-# 启动服务
-python run.py
 ```
-*后端服务默认运行在 `http://localhost:5000`*
 
-### 4. 前端启动 (Frontend)
+`requirements.txt` 内容示例：
+```text
+tensorflow==2.10.0
+numpy
+matplotlib
+scikit-learn
+pandas
+```
+
+---
+
+## 3. 数据集准备
+
+### 3.1 原始数据集结构
+
+原始垃圾数据集应按类别存放，例如：
+
+```text
+unified_dataset/
+├─ battery
+├─ glass
+├─ metal
+├─ organic_waste
+├─ paper_cardboard
+├─ plastic
+├─ textiles
+└─ trash
+```
+
+### 3.2 划分训练 / 验证 / 测试集
+
+运行以下命令进行数据集划分（70% / 15% / 15%）：
 
 ```bash
-# 回到项目根目录
-cd ..
-
-# 安装依赖
-yarn
-
-# 启动开发服务器
-yarn dev
+python 01_split_dataset.py
 ```
-*访问 `http://localhost:3000` 即可体验。*
 
-> **提示**: 如果未启动后端，前端会自动检测并切换至 **Mock 模式**，您依然可以体验所有功能。
+划分完成后会生成：
 
----
-
-## 测试账号 (Demo Credentials)
-
-系统内置 Mock 数据与后端种子数据保持一致：
-
-| 角色 | 用户名 / ID | 密码 | 权限描述 |
-| :--- | :--- | :--- | :--- |
-| **管理员** | `admin` | `admin123` | 全局管理、数据大屏、日志监控、资源管理 |
-| **医生** | `DOC01` | `password` | 接诊台、查看队列、开具处方、病历查询 |
-| **患者** | `P001` | `password` | 自助挂号、查看个人病历、AI 问答 |
+```text
+processed_data/
+├─ train
+├─ val
+└─ test
+```
 
 ---
 
-## 技术栈详情 (Tech Stack)
+## 4. 模型训练（CPU 友好）
 
-### Frontend
-*   **Core**: React 19, TypeScript
-*   **Build**: Vite
-*   **Style**: Tailwind CSS, Lucide React
-*   **State**: React Hooks, Context API
-*   **AI**: Google GenAI SDK
+使用 MobileNetV2 + 迁移学习，仅训练分类头，适合 CPU 环境。
 
-### Backend
-*   **Framework**: Python Flask (Blueprints, App Factory)
-*   **Database**: MySQL (mysql-connector-python)
-*   **Patterns**: Transaction Script, Singleton (DB Pool), Facade
-*   **Utilities**: Flask-CORS, Python Logging
+```bash
+python 02_train_cpu_light.py
+```
+
+### 训练参数说明
+- 输入尺寸：96 × 96
+- Batch Size：8
+- Epoch：6
+- 主干网络：冻结（ImageNet 预训练）
+- 优化器：Adam
+
+训练完成后模型将保存在 `outputs/` 目录中。
 
 ---
 
-## License
+## 5. 模型评估
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 5.1 测试集评估
+
+生成混淆矩阵和分类报告：
+
+```bash
+python 03_evaluate_cpu_light.py
+```
+
+### 5.2 结果可视化
+
+绘制训练曲线和混淆矩阵：
+
+```bash
+python 04_plot_results.py
+```
+
+输出结果包括：
+- 准确率曲线
+- 损失曲线
+- 混淆矩阵图
+
+---
+
+## 6. 模型预测
+
+### 6.1 单张图片预测
+
+```bash
+python 05_predict.py --image path/to/image.jpg
+```
+
+### 6.2 批量预测并导出 CSV
+
+```bash
+python 05_predict.py --folder path/to/folder --out_csv predictions.csv
+```
+
+---
+
+## 7. 抽样预测与结果分布可视化
+
+用于从测试集中**指定类别**随机抽取若干图片进行预测，并生成预测分布柱状图。
+
+### 示例：从 plastic 类中抽取 200 张
+```bash
+python 05_predict_sample.py --class_name plastic --num 200 --plot
+```
+
+可选参数：
+- `--seed`：随机种子（保证复现）
+- `--copy_wrong_to`：将预测错误的图片复制到指定文件夹
+- `--topk`：显示 Top-K 预测概率
+
+---
+
+## 8. 结果说明
+
+在仅使用 CPU 的条件下，模型在测试集上取得约 80% 以上的分类准确率。混淆矩阵显示模型在 battery、organic_waste、textiles 等类别上表现良好，而在 glass 与 metal、plastic 与 paper_cardboard 等外观相似类别间存在一定混淆，符合实际垃圾分类场景。
+
+---
+
+## 9. 备注
+
+- 所有路径均为**绝对路径**，复现实验时根据本地环境调整
+- 若硬件条件允许，可进一步解冻主干网络进行微调以提升性能
+
+---
+
+## 10. 参考文献
+
+1. Sandler M, Howard A, Zhu M, et al. *MobileNetV2: Inverted Residuals and Linear Bottlenecks*. CVPR, 2018.  
+2. TensorFlow Official Documentation.  
+3. Scikit-learn Metrics Documentation.
+
+---
